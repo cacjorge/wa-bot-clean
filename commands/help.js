@@ -14,7 +14,13 @@ exports.run = (bot, message, args) => {
 
         if (!args[0]) {
             // prettier-ignore
-            bot.sendText(message.from, `*Available commands:* ${Object.keys(tmpFile).join(", ")}\n\n_You can run *help <command name>* to show advanced help._`);
+			
+            bot.sendText(message.from, 
+`*IUHA BOT*\n
+*Available commands:*\n
+${Object.keys(tmpFile).join("\n")}\n\n
+_You can run *help <command name>* to show advanced help._`
+);
         } else {
             const commandName = args[0];
             const { name, description, usage } = require(`./${commandName}.js`).help;
