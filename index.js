@@ -24,27 +24,29 @@ function start(bot) {
         const { name, formattedTitle } = chat
         let { pushname, verifiedName } = sender
         pushname = pushname || verifiedName
-        const commands = caption || body || ''
-        let command = commands.toLowerCase().split(' ')[0] || ''
-		const args =  commands.split(' ')
-
-        const msgs = (message) => {
-            if (command.startsWith('#')) {
-                if (message.length >= 10){
-                    return `${message.substr(0, 15)}`
-                }else{
-                    return `${message}`
-                }
-            }
-        }
+        const commands = caption ? caption : body
+        console.log('#######')
+		console.log('Commands: '+commands);
+		//if (!message.body.startsWith(prefix)) return;
+        const args = message.body.slice(prefix.length).trim().split(/ +/g);
+        console.log('#######')
+		console.log('Args: '+args);
+		const command = commands.slice(prefix.length).split(' ')[0];
+		console.log('#######');
+		console.log('Command: '+command);
+		console.log('#######')
 		const time = moment(t * 1000).format('DD/MM HH:mm:ss')
-		if (!isGroupMsg && command.startsWith('#')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname))
-        if (isGroupMsg && command.startsWith('#')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname), 'in', color(formattedTitle))
+		//console.log(time);
+		
+		if (!isGroupMsg && commands.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(prefix+command), 'from', color(pushname))
+        if (isGroupMsg && commands.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(prefix+command), 'from', color(pushname), 'in', color(formattedTitle))
 		
 	
+		if (!message.body.startsWith(prefix)) return;
 		
-		command = command.slice(prefix.length);
-		console.log(command);
-        if (availableCommands.has(command)) require(`./commands/${command}`).run(bot, message, args);
+		
+        if (availableCommands.has(command)){
+			require(`./commands/${command}`).run(bot, message, args);
+		} 
     });
 };
