@@ -18,17 +18,33 @@ whatsapp.create().then((bot) => start(bot));
 
 function start(bot) {
     bot.onMessage(async (message) => {
-        if (!message.body.startsWith(prefix)) return;
-        const args = message.body.slice(prefix.length).trim().split(/ +/g);
-        const command = args.shift().toLowerCase();
-		console.log(command);
-		
-		const time = moment(t * 1000).format('DD/MM HH:mm:ss');
-		console.log(time);
-		//if (!message.isGroupMsg && command.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname))
-        //if (message.isGroupMsg && command.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname), 'in', color(formattedTitle))
+        //console.log(message);
+		const { type, id, from, t, sender, isGroupMsg, chat, caption, isMedia, mimetype, quotedMsg, quotedMsgObj, mentionedJidList } = message
+        let { body } = message
+        const { name, formattedTitle } = chat
+        let { pushname, verifiedName } = sender
+        pushname = pushname || verifiedName
+        const commands = caption || body || ''
+        let command = commands.toLowerCase().split(' ')[0] || ''
+		const args =  commands.split(' ')
 
-        if (availableCommands.has(command))
-            require(`./commands/${command}`).run(bot, message, args);
+        const msgs = (message) => {
+            if (command.startsWith('#')) {
+                if (message.length >= 10){
+                    return `${message.substr(0, 15)}`
+                }else{
+                    return `${message}`
+                }
+            }
+        }
+		const time = moment(t * 1000).format('DD/MM HH:mm:ss')
+		if (!isGroupMsg && command.startsWith('#')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname))
+        if (isGroupMsg && command.startsWith('#')) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(msgs(command)), 'from', color(pushname), 'in', color(formattedTitle))
+		
+	
+		
+		command = command.slice(prefix.length);
+		console.log(command);
+        if (availableCommands.has(command)) require(`./commands/${command}`).run(bot, message, args);
     });
 };

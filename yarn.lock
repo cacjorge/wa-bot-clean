@@ -2909,7 +2909,7 @@
   dependencies:
     "minimist" "^1.2.5"
 
-"moment-timezone@^0.5.31":
+"moment-timezone@^0.5.32":
   "integrity" "sha512-Z8QNyuQHQAmWucp8Knmgei8YNo28aLjJq6Ma+jy1ZSpSk5nyfRT8xgUbSQvD2+2UajISfenndwvFuH3NGS+nvA=="
   "resolved" "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.32.tgz"
   "version" "0.5.32"
