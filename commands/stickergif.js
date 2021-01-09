@@ -7,7 +7,6 @@ const isUrl = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA
 const uaOverride = "WhatsApp/2.2029.4 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36";
 
 
-
 exports.run = async (bot, message, args) => {
     if (message.isMedia && message.type === 'video' || message.mimetype === 'image/gif') {
 		try{
@@ -82,6 +81,6 @@ exports.run = async (bot, message, args) => {
 exports.help = {
     name: "StickerGif",
     description: "Stickerify a gif or video",
-    usage: "stickergif",
+    usage: "stickergif <gif/video>/<quoted>/<url>",
     cooldown: 5
 };

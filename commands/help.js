@@ -4,7 +4,8 @@ exports.run = (bot, message, args) => {
     let tmpFile = {};
     readdir("./commands/", (e, files) => {
         if (e) console.error(e);
-        files.forEach((jsFile) => {
+		//console.log(files);
+        files.forEach( (jsFile) => {
             const cmdFile = require(`./${jsFile}`);
             tmpFile[jsFile.replace(".js", "")] = {};
             tmpFile[jsFile.replace(".js", "")].name = cmdFile.help.name;
@@ -12,7 +13,7 @@ exports.run = (bot, message, args) => {
             tmpFile[jsFile.replace(".js", "")].usage = cmdFile.help.usage;
         });
 
-        if (!args[0]) {
+        if (!args[1]) {
             // prettier-ignore
 			
             bot.sendText(message.from, 
@@ -22,7 +23,7 @@ ${Object.keys(tmpFile).join("\n")}\n\n
 _You can run *help <command name>* to show advanced help._`
 );
         } else {
-            const commandName = args[0];
+            const commandName = args[1];
             const { name, description, usage } = require(`./${commandName}.js`).help;
             bot.sendText(message.from, `*${name}*\n\nDescription: ${description}\nUsage: \`\`\`${usage}\`\`\``);
         };

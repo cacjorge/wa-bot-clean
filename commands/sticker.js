@@ -13,22 +13,22 @@ exports.run = async (bot, message, args) => {
 			const imageBase64 = `data:${message.quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
 			await bot.sendImageAsSticker(message.from, imageBase64)
 		}else if (args.length === 2) {
-					const url = args[1]
-					if (url.match(isUrl)) {
-						await bot.sendStickerfromUrl(message.from, url, { method: 'get' })
-							.catch(err => console.log('Caught exception: ', err))
-					} else {
-						bot.reply(message.from, '[❗] The link you submitted is invalid!', message.id);
-					}
+				const url = args[1];
+				if (url.match(isUrl)) {
+					await bot.sendStickerfromUrl(message.from, url, { method: 'get' })
+						.catch(err => console.log('Caught exception: ', err))
 				} else {
-						bot.reply(message.from, '[❗] Send the image with the caption */sticker* or the image tag that has been sent or url', message.id);
+					bot.reply(message.from, '[❗] The link you submitted is invalid!', message.id);
 				}
+			} else {
+					bot.reply(message.from, '[❗] Send the image with the caption */sticker* or the image tag that has been sent or url', message.id);
+			}
 };
 
 exports.help = {
     name: "Sticker",
     description: "Stickerify a picture",
-    usage: "sticker",
+    usage: "sticker <image>/<quoted>/<url>",
     cooldown: 5
 };
 
