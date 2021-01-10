@@ -12,6 +12,7 @@ exports.run = async (bot, message, args) => {
 			
 			youtubedl.getInfo(url, async function(err, info) {
 				  if (err) throw err
+				  /*
 				  console.log('id:', info.id)
 				  console.log('title:', info.title)
 				  console.log('url:', info.url)
@@ -20,6 +21,7 @@ exports.run = async (bot, message, args) => {
 				  console.log('filename:', info._filename)
 				  console.log('format id:', info.format_id)
 				  console.log('################################################');
+				  */
 				  await bot.sendFileFromUrl(message.from,info.url,info._filename,info.title,message.id).catch(() => bot.reply(message.from, '[❗] An error occurred, maybe the error is caused by the system.', message.id));
 				});
 		} else {
