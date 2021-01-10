@@ -1,11 +1,12 @@
 const prefix = require("./config.json").prefix;
-const whatsapp = require("@open-wa/wa-automate");
+const options = require('./options');
+//const whatsapp = require("@open-wa/wa-automate");
+const { create, Client } = require('@open-wa/wa-automate')
 const fs = require("fs");
 const color = require('./lib/color');
 const moment = require('moment-timezone');
 
-
-const availableCommands = new Set();
+const availableCommands = new Set();	
 
 fs.readdir("./commands", (e, files) => {
     if (e) return console.error(e);
@@ -14,11 +15,16 @@ fs.readdir("./commands", (e, files) => {
     });
 });
 
-whatsapp.create().then((bot) => start(bot));
-
-function start(bot) {
-    bot.onMessage(async (message) => {
-        //console.log(message);
+const start = async (bot = new Client()) => {
+    console.log('[SERVER] Server Started!')
+    // Force it to keep the current session
+	bot.onStateChanged((state) => {
+            console.log('[Client State]', state)
+            if (state === 'CONFLICT' || state === 'UNLAUNCHED') bot.forceRefocus();
+        })
+	
+	// listening on message
+	bot.onMessage(async (message) => {
 		const { type, id, from, t, sender, isGroupMsg, chat, caption, isMedia, mimetype, quotedMsg, quotedMsgObj, mentionedJidList } = message
         let { body } = message
         const { name, formattedTitle } = chat;
@@ -26,30 +32,9 @@ function start(bot) {
         pushname = pushname || verifiedName;
         const commands = caption ? caption : body;
 		const command = commands.slice(prefix.length).split(' ')[0] || '';
-		
-		//const args =  commands.split(' ');
-		//if (!message.body.startsWith(prefix)) return;
-		
+
         const args = message.body.slice(prefix.length).trim().split(/ +/g);
-		
-        //const command = commands.shift().toLowerCase();
-		//const command = commands.slice(prefix.length).split(' ')[0];
-		//const command = args.shift().toLowerCase();
-		/*
-		console.log('#######');
-		console.log('Commands: '+commands);
-		console.log('#######');
-		console.log('Args: '+args);
-		console.log('#######');
-		console.log('Command: ' + command);
-		console.log('#######');
-		*/
-		
 		const time = moment(t * 1000).format('DD/MM HH:mm:ss');
-		
-		//console.log(time);
-		//console.log('#######');
-		
 		
 		if (!isGroupMsg && commands.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(prefix+command), 'from', color(pushname));
         if (isGroupMsg && commands.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(prefix+command), 'from', color(pushname), 'in', color(formattedTitle));
@@ -60,4 +45,17 @@ function start(bot) {
 			require(`./commands/${command}`).run(bot, message, args);
 		}  
     });
+	
+	bot.onIncomingCall(( async (call) => {
+            await bot.sendText(call.peerJid, 'Não consigo receber chamadas. Repeat = block!')
+            .then(() => bot.contactBlock(call.peerJid))
+        }));
 };
+
+
+create(options(true, start))
+    .then(client => start(client))
+    .catch((error) => console.log(error))
+
+
+
