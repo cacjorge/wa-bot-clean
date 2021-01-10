@@ -1,4 +1,5 @@
 const { readdir } = require("fs");
+const prefix = require("../config.json").prefix;
 
 exports.run = (bot, message, args) => {
     let tmpFile = {};
@@ -18,9 +19,10 @@ exports.run = (bot, message, args) => {
 			
             bot.sendText(message.from, 
 `*IUHA BOT*\n
+*Prefix:* ${prefix}
 *Available commands:*\n
 ${Object.keys(tmpFile).join("\n")}\n\n
-_You can run *help <command name>* to show advanced help._`
+_You can run *${prefix}help <command name>* to show advanced help._`
 );
         } else {
             const commandName = args[1];

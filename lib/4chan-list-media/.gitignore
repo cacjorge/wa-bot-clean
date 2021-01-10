@@ -1,0 +1,5 @@
+node_modules/
+.nyc_output/
+*.swo
+*.swp
+*.log
