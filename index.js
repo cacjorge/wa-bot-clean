@@ -47,8 +47,8 @@ const start = async (bot = new Client()) => {
     });
 	
 	bot.onIncomingCall(( async (call) => {
-            await bot.sendText(call.peerJid, 'Não consigo receber chamadas. Repeat = block!')
-            .then(() => bot.contactBlock(call.peerJid))
+            await bot.sendText(call.peerJid, 'Não consigo receber chamadas. Seu número será bloqueado se continuar!');
+            //.then(() => bot.contactBlock(call.peerJid))
         }));
 };
 

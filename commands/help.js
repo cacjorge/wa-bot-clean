@@ -1,25 +1,26 @@
 const { readdir } = require("fs");
+//const { fs } = require('fs-extra');
 const prefix = require("../config.json").prefix;
 
+
 exports.run = (bot, message, args) => {
+	console.log(args);
     let tmpFile = {};
     readdir("./commands/", (e, files) => {
         if (e) console.error(e);
-		//console.log(files);
-        files.forEach( (jsFile) => {
-            const cmdFile = require(`./${jsFile}`);
-            tmpFile[jsFile.replace(".js", "")] = {};
-            tmpFile[jsFile.replace(".js", "")].name = cmdFile.help.name;
-            tmpFile[jsFile.replace(".js", "")].description = cmdFile.help.description;
-            tmpFile[jsFile.replace(".js", "")].usage = cmdFile.help.usage;
+        files.forEach((jsFile) => {
+			const cmdFile = require(`./${jsFile}`);
+			tmpFile[jsFile.replace(".js", "")] = {};
+			tmpFile[jsFile.replace(".js", "")].name = cmdFile.help.name;
+			tmpFile[jsFile.replace(".js", "")].description = cmdFile.help.description;
+			tmpFile[jsFile.replace(".js", "")].usage = cmdFile.help.usage;
         });
 
         if (!args[1]) {
             // prettier-ignore
-			
-            bot.sendText(message.from, 
-`*IUHA BOT*\n
-*Prefix:* ${prefix}
+			bot.sendText(message.from, 
+`*######  IUHA BOT   ######*\n
+*Prefix:* \t${prefix}
 *Available commands:*\n
 ${Object.keys(tmpFile).join("\n")}\n\n
 _You can run *${prefix}help <command name>* to show advanced help._`

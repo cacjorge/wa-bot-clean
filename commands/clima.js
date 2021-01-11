@@ -21,11 +21,9 @@ exports.run = async (bot, message, args) => {
 				page = await browser.newPage();
 				try{
 					let forecastHTML = `file://${__dirname}/../lib/forecast/forecast.html?location=${local}`;
-					//console.log(forecastHTML);
 					await page.goto(forecastHTML, {"waitUntil" : "networkidle0"});
-					await page.waitForSelector('div.horizontalweatherForecast');
-					
-					widgetElement =  await page.$('.horizontalweatherForecast');
+					widgetElement =  await page.$('.verticalweatherForecast');
+					await page.waitForSelector('div.verticalweatherForecast');
 					if (widgetElement) {
 							try{
 								let forecast = await widgetElement.screenshot({

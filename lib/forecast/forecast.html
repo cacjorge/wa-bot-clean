@@ -34,13 +34,13 @@
         }
 
         .horizontalweatherForecast {
-            width:518px;
-            height:120px;
+            width:259px; <!--518px-->
+            height:120px;<!--120px-->
           
         }
         .verticalweatherForecast {
-            width:450px;
-            height:550px;
+            width:340px;
+            height:443px;
         }
 
 
@@ -239,9 +239,10 @@
                 //sets up the basic skeleton HTML for the forecast display
                 root.toggleClass("forecastwidget", true);
                 root.html("<div class='location'></div>"+
-                            "<div class='days'></div>"+
-                            "<div class='footer'><a href='https://www.visualcrossing.com/weather-api' title='Weather Data by Visual Crossing' target='_blank'>Weather Data by Visual Crossing</a>");
-             
+                            "<div class='days'></div>"
+                           // +"<div class='footer'><a href='https://www.visualcrossing.com/weather-api' title='Weather Data by Visual Crossing' target='_blank'>Weather Data by Visual Crossing</a>"
+						   );
+				console.log(root);
                 //use the container size to decide how to display the forecast
                 //and how many days
                 var rect=root.get(0).getBoundingClientRect()
@@ -304,12 +305,12 @@
  
     <!-- <h1>Horizontal display</h1> -->
     <div class="horizontalweatherForecast"></div>
-   <!--  <h1>Vertical display</h1>
+   <!--  <h1>Vertical display</h1>-->
     <div class="verticalweatherForecast"></div>
-     -->
+     
     <script>
 		WeatherForecastDisplay.attach(".horizontalweatherForecast");
-        <!-- WeatherForecastDisplay.attach(".verticalweatherForecast"); -->
+        WeatherForecastDisplay.attach(".verticalweatherForecast");
     </script>
 </body>
 </html>

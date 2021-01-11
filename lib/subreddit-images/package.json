@@ -1,0 +1,23 @@
+{
+  "name": "subreddit-images",
+  "version": "1.0.0",
+  "description": "grabs nsfw images from subreddit",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "nsfw",
+    "reddit",
+    "porn"
+  ],
+  "homepage": "",
+  "bugs": {
+    "url": ""
+  },
+  "author": "iuha",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  }
+}
