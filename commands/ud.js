@@ -1,10 +1,11 @@
 const ud = require('urban-dictionary');
 
 exports.run = async (bot, message, args) => {
-	ud.term(args[1])
+	args.shift();
+	const term = args.join(" ");
+	ud.define(term)
 		.then((result) => {
-			const entries = result.entries;
-			bot.sendText(message.from,`*Termo:* ${entries[0].word}\n *Definição:* ${entries[0].definition}\n *Exemplo:* ${entries[0].example}\n`);
+			bot.sendText(message.from,`*URBAN DICTIONARY*\n*Termo:* ${result[0].word}\n*Definição:* ${result[0].definition}\n*Exemplo:* ${result[0].example}\n`);
 		})
 };
 

@@ -31,15 +31,22 @@ const start = async (bot = new Client()) => {
         let { pushname, verifiedName } = sender;
         pushname = pushname || verifiedName;
         const commands = caption ? caption : body;
+		console.log("COMMANDS: "+commands);
 		const command = commands.slice(prefix.length).split(' ')[0] || '';
-
-        const args = message.body.slice(prefix.length).trim().split(/ +/g);
+		console.log("COMMAND: "+command);
+		
+		let args = '';
+		if(!message.isMedia) args = message.body.slice(prefix.length).trim().split(/ +/g);
+			else args = commands.slice(prefix.length).trim().split(/ +/g);
+			
+		console.log("ARGS: "+args);
+		
 		const time = moment(t * 1000).format('DD/MM HH:mm:ss');
 		
 		if (!isGroupMsg && commands.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(prefix+command), 'from', color(pushname));
         if (isGroupMsg && commands.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(prefix+command), 'from', color(pushname), 'in', color(formattedTitle));
 	
-		if (!message.body.startsWith(prefix)) return;
+		if (!commands.startsWith(prefix)) return;
 		 
         if (availableCommands.has(command)){
 			require(`./commands/${command}`).run(bot, message, args);
