@@ -57,6 +57,9 @@ exports.run = async (bot, message, args) => {
 						console.log(e)
 						})
 				break
+				default:
+					bot.sendText(message.from,'Somente Megasena e Quina');
+				break
 		}
 	} else if(args.length === 3){
 			switch(args[1]){
@@ -112,6 +115,9 @@ exports.run = async (bot, message, args) => {
 							console.log(e)
 							})
 					break
+				default:
+					bot.sendText(message.from,'Somente Megasena e Quina');
+				break
 			}
 		}
 };
