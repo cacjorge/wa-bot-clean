@@ -8,6 +8,7 @@ const SRImages = require('../lib/subreddit-images');
 const SRImagesClient = new SRImages.Client();
 
 exports.run = async (bot, message, args) => {
+	if(!message.isGroupMsg) return bot.sendText(message.from,"Comando somente para grupos!");
 	const nsfw_ = JSON.parse(fs.readFileSync('./lib/NSFW.json'));
 	const isNSFW = nsfw_.includes(message.chat.id);
 	console.log(nsfw_);

@@ -9,12 +9,13 @@ const sleep = async (ms) => {
 }
 
 exports.run = async (bot, message, args) => {
+	args.shift();
 	let widgetElement = '';
 	let browser = '';
 	let page = '';
 	if (args.length === 2){
 		bot.reply(message.from, '[Wait] In Progress ⏳ Please Wait!', message.id);
-		const local = message.body.slice(7);
+		const local = args.join(" ");
 		if(isLocation(local)){
 			(async() => {    
 				browser = await puppeteer.launch();

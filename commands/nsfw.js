@@ -3,6 +3,7 @@ const nsfw_ = JSON.parse(fs.readFileSync('./lib/NSFW.json'));
 
 exports.run = async (bot, message, args) => {
 	console.log(args);
+	if(!message.isGroupMsg) return bot.sendText(message.from,"Comando somente para grupos!");
 	const groupAdmins = message.isGroupMsg ? await bot.getGroupAdmins(message.chat.groupMetadata.id) : ''
 	const isGroupAdmins = message.isGroupMsg ? groupAdmins.includes(message.sender.id) : false
 	if (!message.isGroupMsg) return bot.reply(message.from, 'This command can only be used in groups!', message.id);

@@ -31,6 +31,8 @@ const start = async (bot = new Client()) => {
         let { pushname, verifiedName } = sender;
         pushname = pushname || verifiedName;
         const commands = caption ? caption : body;
+		if (!commands.startsWith(prefix)) return;
+		
 		console.log("COMMANDS: "+commands);
 		const command = commands.slice(prefix.length).split(' ')[0] || '';
 		console.log("COMMAND: "+command);
@@ -46,7 +48,7 @@ const start = async (bot = new Client()) => {
 		if (!isGroupMsg && commands.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(prefix+command), 'from', color(pushname));
         if (isGroupMsg && commands.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(prefix+command), 'from', color(pushname), 'in', color(formattedTitle));
 	
-		if (!commands.startsWith(prefix)) return;
+		
 		 
         if (availableCommands.has(command)){
 			require(`./commands/${command}`).run(bot, message, args);
