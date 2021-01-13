@@ -12,7 +12,7 @@ exports.run = async (bot, message, args) => {
 	let browser = '';
 	let page = '';
 	let tabelaHTML='';
-	//
+	
 	let tabelaHTMLSerieA = `https://www.google.com/search?sxsrf=ALeKk00ClZ09Xshv6rv76qTkboByqQB4hQ%3A1610411541585&ei=Fe78X62LI_3C5OUPzailyAo&q=tabela+do+campeonato+brasileiro&oq=tabela+do+campeonato+brasileiro&gs_lcp=CgZwc3ktYWIQAzIECCMQJzIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLATIFCAAQywEyBQgAEMsBMgUIABDLAToECAAQRzoHCAAQChDLAToGCAAQBxAeULTuGFjq7xhgmvQYaABwAngAgAGRAYgBjgKSAQMwLjKYAQCgAQGqAQdnd3Mtd2l6yAEIwAEB&sclient=psy-ab&ved=0ahUKEwjt6YK_kpXuAhV9IbkGHU1UCakQ4dUDCA0&uact=5#sie=lg;/g/11fmzksb3y;2;/m/0fnk7q;st;fp;1;;`;
 	let tabelaHTMLSerieB = `https://www.google.com/search?sxsrf=ALeKk033Bwh--jPYHHaoYELrEgUUCFATRQ%3A1610412515632&ei=4_H8X9-IJs6j5OUP7Y-y-AM&q=tabela+do+campeonato+brasileiro+serie+b&oq=tabela+do+campeonato+brasileiro+serie+b&gs_lcp=CgZwc3ktYWIQA1AAWABgogFoAHAAeACAAQCIAQCSAQCYAQCqAQdnd3Mtd2l6&sclient=psy-ab&ved=0ahUKEwifhr6PlpXuAhXOEbkGHe2HDD8Q4dUDCA0&uact=5#sie=lg;/g/11fn8ps7gm;2;/m/0fnkb5;st;fp;1;;`;
 			

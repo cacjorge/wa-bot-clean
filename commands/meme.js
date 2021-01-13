@@ -58,6 +58,6 @@ exports.run = async (bot, message, args) => {
 exports.help = {
     name: "Meme",
     description: "Random meme or custom meme with top and bottom text with image",
-    usage: "meme\nmeme <top><bottom> in caption of image or quoted image",
+    usage: "meme\nmeme <top>|<bottom> in caption of image or quoted image",
     cooldown: 5
 };
