@@ -1,14 +1,15 @@
 const fs = require('fs-extra');
+const nsfw_ = JSON.parse(fs.readFileSync('./lib/NSFW.json'));
+
 
 exports.run = async (bot, message, args) => {
-	if(!message.isGroupMsg) return bot.sendText(message.from,"Comando somente para grupos!");
-	const nsfw_ = JSON.parse(fs.readFileSync('./lib/NSFW.json'));
 	const isNSFW = nsfw_.includes(message.chat.id);
+	if(!message.isGroupMsg) return bot.sendText(message.from,"Comando somente para grupos!");
 	console.log(nsfw_);
 	if(isNSFW){
 		bot.sendText(message.from,
   `┠❥=========================
-   ┠❥=======   NSFW   ========
+   ┠❥=====   NSFW MENU  ======
    ┠❥ *#rr* (random)
    ┠❥ *#rpussy* (random pussy)
    ┠❥ *#rboobs* (random boobs)
@@ -27,6 +28,6 @@ exports.run = async (bot, message, args) => {
 exports.help = {
     name: "Menu for NSFW",
     description: "If NSFW is enabled in group, send NSFW menu",
-    usage: "nsfwMenu",
+    usage: "\tnsfwMenu",
     cooldown: 5
 };

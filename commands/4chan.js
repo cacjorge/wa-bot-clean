@@ -1,40 +1,39 @@
-const listMedia = require('../lib/4chan-list-media');
-
-let ownerNumber = ["5562*****@c.us","*****"]; // replace with your whatsapp number
-ownerNumber = ["556299313132@c.us","556299313132"]; // replace with your whatsapp number #ignoreline
-
-
-const sleep = async (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+const { sleep } = require('../lib/functions');
+const fs = require('fs-extra');
+const { spawn, exec } = require('child_process');
 
 exports.run = async (bot, message, args) => {
 	console.log(args);
-	if (!ownerNumber.includes(message.sender.id)) return bot.reply(message.from, 'Você não é o dono. Por enquanto só o dono!', message.id)
-	if (args.length === 1) return bot.reply(message.from, 'Send command *4chan [link] *', message.id)
+	if (args.length === 1) return bot.reply(message.from, '*4chan [link to image/webm] *', message.id)
 	if (args.length === 2) {
 		const url = args[1];
-		try {
-				const data = await listMedia(url);
-				bot.sendText(message.from,'4chan thread: ' + data.subject + ' ( '+data.media.length+' Images)');
-				for (let i = 0; i < data.media.length; i++) {
-					await bot.sendFileFromUrl(message.from, data.media[i].url, data.media[i].filename+data.media[i].ext, '');
-					sleep(400);
-				}
-				bot.sendText(message.from,'*END OF THREAD*');
-				
-				
-			} catch (err) {
-				console.error('Whoa# 404# :c', err)
-			}
+		let extensao = url.split('.').reverse()[0];
+		if(extensao === 'webm'){
+			exec(`ffmpeg -i "${url}" -vcodec libx264  -profile:v baseline -level 3 ./media/videotemp.mp4`, function (error, stdout, stderr) {
+							bot.sendFile(message.from,'./media/videotemp.mp4','videotemp.mp4',' ', message.id)
+								.then((_) => {
+									fs.unlink('./media/videotemp.mp4', function(err) {
+												if (err) {
+														console.log( err );
+													} else {
+														console.log("Successfully deleted the file.")
+													}
+									});
+								})
+								.catch((err) => {
+											console.log(err);
+											bot.reply(message.from,'Não foi possível converter esse vídeo',message.id);
+										});
+						});
+		} else bot.reply(message.from,'Link inválido',message.id);
 			
-		}
+	}
 
 };
 
 exports.help = {
-    name: "Fourchan",
+    name: "4chan",
     description: "Download media from a 4chan thread",
-    usage: "fourchan <url>",
+    usage: "\t4chan <url>",
     cooldown: 5
 };

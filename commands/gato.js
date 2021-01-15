@@ -1,4 +1,3 @@
-
 exports.run = async (bot, message, args) => {
 	q2 = Math.floor(Math.random() * 900) + 300;
 	q3 = Math.floor(Math.random() * 900) + 300;

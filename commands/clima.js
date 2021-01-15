@@ -1,12 +1,8 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs-extra');
-
-const isLocation = (loc) => {
-	return loc.match(new RegExp(/(([A-Za-z]*[\s]*)\w+(,))+(([A-Za-z]\w)|(([A-Za-z])\w+(,)+([A-Za-z])\w))/,'gius'))
-}
-const sleep = async (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+const { sleep,
+		isLocation
+      } = require('../lib/functions');
 
 exports.run = async (bot, message, args) => {
 	args.shift();
@@ -32,16 +28,10 @@ exports.run = async (bot, message, args) => {
 													omitBackground: true,
 													encoding: 'base64'
 												});
-								bot.sendImage(message.from, `data:image/png;base64,${forecast.toString('base64')}`,message.id)
-								
-							}catch(e) {
-								console.log( `Couldn't take a screenshot of the element with the index of: ${ widgetElement }. Reason: `, e );
-							}
+								bot.sendImage(message.from, `data:image/png;base64,${forecast.toString('base64')}`,message.id);
+							}catch(e){ console.log( `Couldn't take a screenshot of the element with the index of: ${ widgetElement }. Reason: `, e );}
 					} 
-					
-				}catch(e){
-					console.log(e);
-				}
+				}catch(e) { console.log(e); }
 				await browser.close();
 			})();
 			

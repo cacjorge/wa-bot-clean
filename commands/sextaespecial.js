@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 
 let bakaNumber = ['********@c.us']
-bakaNumber = ['556281313310@c.us'] // #ignoreline
+bakaNumber = ['556281313310@c.us']
 
 exports.run = async (bot, message, args) => {
 	const isBaka = bakaNumber.includes(message.sender.id);

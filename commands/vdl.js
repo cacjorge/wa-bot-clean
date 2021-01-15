@@ -1,9 +1,8 @@
 const youtubedl = require('youtube-dl');
-const isUrl = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/gi)
-
+const { isUrl } = require('../lib/functions');
 exports.run = async (bot, message, args) => {
 	console.log(args);
-	if (args.length === 1) bot.reply(message.from, 'Send command */videodown [url] *, example */videodown https://twitter.com/i/status/1337276001546432513*', message.id)
+	if (args.length === 1) bot.reply(message.from, 'Send command *vdl [url] *, example *vdl https://twitter.com/i/status/1337276001546432513*', message.id)
 	if (args.length === 2) {
 		const url = args[1];
 		if (url.match(isUrl)) {
@@ -23,7 +22,7 @@ exports.run = async (bot, message, args) => {
 exports.help = {
     name: "Video Downloader",
     description: "Download a video from site (Facebook, Twitter, Instagram, Youtube and some others (others are at your own risk, may work, may not work)",
-    usage: "videodown <url>",
+    usage: "\tvdl <url>",
     cooldown: 5
 };
 

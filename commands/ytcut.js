@@ -1,8 +1,9 @@
 const youtubedl = require('youtube-dl');
 const fs = require('fs-extra');
 const { spawn, exec } = require('child_process');
-const isUrl = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/gi)
-const isYtLink = new RegExp(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)
+
+
+const { isUrl, isYtLink } = require('../lib/functions');
 
 
 exports.run = async (bot, message, args) => {
@@ -49,6 +50,6 @@ exports.run = async (bot, message, args) => {
 exports.help = {
     name: "Youtube Video Cutter & Downloader",
     description: "Download part of a youtube video.",
-    usage: "ytcut <url> <HH:MM:SS> <HH:MM:SS>\nexample *#ytcut https://www.youtube.com/watch?v=HnzH15hwt48* 00:00:21 00:00:25'",
+    usage: "\tytcut <url> <HH:MM:SS> <HH:MM:SS>\nexample *#ytcut https://www.youtube.com/watch?v=HnzH15hwt48* 00:00:21 00:00:25'",
     cooldown: 5
 };

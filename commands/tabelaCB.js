@@ -1,12 +1,5 @@
 const puppeteer = require('puppeteer');
 
-/* const isLocation = (loc) => {
-	return loc.match(new RegExp(/(([A-Za-z]*[\s]*)\w+(,))+(([A-Za-z]\w)|(([A-Za-z])\w+(,)+([A-Za-z])\w))/,'gius'))
-}
-const sleep = async (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-} */
-
 exports.run = async (bot, message, args) => {
 	let widgetElement = '';
 	let browser = '';
@@ -48,9 +41,6 @@ exports.run = async (bot, message, args) => {
 		}
 		await browser.close();
 	})();
-			
-		//} else bot.sendText(message.from,'Formato de pesquisa inválido! Formato deve ser \'Cidade,Estado/Provincia(sigla)(se existir),Pais(sigla)\'');
-	//} else bot.sendText(message.from,'Comando inválido! Comando deve ser /clima \'Cidade,Estado/Provincia(sigla)(se existir),Pais(sigla)\'');
 };
 
 exports.help = {
