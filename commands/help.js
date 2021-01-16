@@ -18,13 +18,13 @@ exports.run = (bot, message, args) => {
         });
 		if (!args[1]) {
             // prettier-ignore
-			let ajuda = `*┠❥=========================*\n*┠❥========   IUHA BOT   ========*\n`;
+			let ajuda = `*┠❥========================*\n*┠❥=====   IUHA BOT   =====*\n`;
 			Object.keys(tmpFile).forEach(function (key) {
 				ajuda += `*┠❥* ${prefix}`+key+'\n';
 			});
 			ajuda += `*┠❥=========================*\n_Digite *${prefix}help <comando>* para maiores informações._`;
 			//console.log(ajuda);
-			bot.sendText(message.sender.id,ajuda);
+			bot.sendText(message.from,ajuda);
 
 
         } else {
