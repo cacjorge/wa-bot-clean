@@ -2,7 +2,7 @@ const axios = require('axios');
 
 exports.run = async (bot, message, args) => {
 	const waifu = await axios.get('https://mhankbarbar.herokuapp.com/api/waifu')
-	bot.sendFileFromUrl(message.from, waifu.data.image, 'Waifu.jpg', `❤️ Name : ${waifu.data.name}\n🎉️ Description : ${waifu.data.desc}\n\n❇️ Source : ${waifu.data.source}`, id)
+	bot.sendFileFromUrl(message.from, waifu.data.image, 'Waifu.jpg', `❤️ Name : ${waifu.data.name}\n🎉️ Description : ${waifu.data.desc}\n\n❇️ Source : ${waifu.data.source}`, message.id)
 };
 
 exports.help = {
