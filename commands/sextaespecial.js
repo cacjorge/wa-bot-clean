@@ -8,8 +8,8 @@ exports.run = async (bot, message, args) => {
 	if (!isBaka) { 
 		bot.reply(message.from, 'Você não é o Baka!!', message.id)
 	}else {
-		bot.sendFile(message.from, '../media/videos/sextaespecial.mp4', message.id);
-		const amaroneto = await fs.readFileSync('../media/videos/amaroneto.gif', { encoding: "base64" });
+		bot.sendFile(message.from, './media/videos/sextaespecial.mp4', message.id);
+		const amaroneto = await fs.readFileSync('./media/videos/amaroneto.gif', { encoding: "base64" });
 		await client.sendImageAsSticker(from, `data:image/gif;base64,${amaroneto.toString('base64')}`);
 		const groupMek = await bot.getGroupMembers(message.groupId);
 		let heho = '╔═✪〘 *HOJE É SEXTA FEIRA* 〙\n'

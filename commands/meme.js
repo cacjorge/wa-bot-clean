@@ -15,19 +15,22 @@ exports.run = async (bot, message, args) => {
 		} else if(args.length >= 2){
 					args.shift();
 					const texto = args.join(" ");
-					const topText = texto.trim().split('|')[0];
-					const bottomText = texto.trim().split('|')[1];
+					const topText = texto.trim().split('|')[0].replace(/ /g,"_");;
+					const bottomText = texto.trim().split('|')[1].replace(/ /g,"_");
+					/* console.log(topText);
+					console.log("#######");
+					console.log(bottomText); */
 					if(message.isMedia && message.type === 'image'){
 						const mediaData = await decryptMedia(message, uaOverride);
 						let imageUrl = await uploadImages(mediaData,false,message.mimetype);
 						const memeBase64 = await custom(imageUrl, topText, bottomText);
-						bot.sendImage(message.from, memeBase64, message.id)
+						bot.sendImage(message.from, memeBase64, 'meme.png','', message.id);
 					} else if( message.quotedMsg && message.quotedMsg.type === 'image' ){
 						const mediaData = await decryptMedia(message.quotedMsg, uaOverride);
 						let imageUrl = await uploadImages(mediaData,false,message.quotedMsg.mimetype);
 						const memeBase64 = await custom(imageUrl, topText, bottomText);
-						bot.sendImage(message.from, memeBase64, message.id)
-					}
+						bot.sendImage(message.from, memeBase64,'meme.png','', message.id);
+					} 
 				}
 };
 
