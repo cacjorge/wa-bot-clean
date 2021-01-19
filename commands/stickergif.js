@@ -29,7 +29,7 @@ exports.run = async (bot, message, args) => {
 			} else if (args.length === 2) {
 					try{
 						const url = args[1];
-						if (url.match(isUrl)) {
+						if (isUrl(url)) {
 							bot.reply(message.from, '[Wait] In Progress ⏳ Please Wait a Moment', message.id);
 							let ext = '';
 							const dest = './media/';
