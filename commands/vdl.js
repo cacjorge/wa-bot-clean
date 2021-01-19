@@ -5,7 +5,7 @@ exports.run = async (bot, message, args) => {
 	if (args.length === 1) bot.reply(message.from, 'Send command *vdl [url] *, example *vdl https://twitter.com/i/status/1337276001546432513*', message.id)
 	if (args.length === 2) {
 		const url = args[1];
-		if (url.match(isUrl)) {
+		if (isUrl(url)) {
 			//const video = youtubedl(url);
 			//let filepath = 'temp.mp4';
 			
