@@ -1,10 +1,12 @@
 const prefix = require("./config.json").prefix;
 const options = require('./options');
-//const whatsapp = require("@open-wa/wa-automate");
 const { create, Client } = require('@open-wa/wa-automate')
 const fs = require("fs");
 const color = require('./lib/color');
 const moment = require('moment-timezone');
+hound = require('hound');
+
+watcher = hound.watch('./commands');
 
 const availableCommands = new Set();	
 
@@ -59,6 +61,11 @@ const start = async (bot = new Client()) => {
             await bot.sendText(call.peerJid, 'Não consigo receber chamadas. Seu número será bloqueado se continuar!')
             .then(() => bot.contactBlock(call.peerJid))
         }));
+	// watch for new commands
+	watcher.on('create', function(file, stats) {
+		  availableCommands.add(file.slice(11).replace(".js", ""))
+		  console.log(file.slice(11).replace(".js", "") + ' was created')
+		})
 };
 
 

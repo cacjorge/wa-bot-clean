@@ -8,7 +8,7 @@ exports.run = async (bot, message, args) => {
 	if(resp.data.type === 'twopart') jokeText = resp.data.setup + '\n' + resp.data.delivery;
 		else jokeText  = resp.data.joke;
 	console.log(jokeText);
-	bot.reply(message.from, jokeText , message.id)
+	bot.reply(message.from, jokeText , message.id);
 };
 
 exports.help = {
