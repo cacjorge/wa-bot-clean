@@ -1,4 +1,5 @@
 const { decryptMedia } = require("@open-wa/wa-decrypt");
+const axios = require('axios');
 const uaOverride = "WhatsApp/2.2029.4 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36";
 const {
     uploadImages,
@@ -11,7 +12,11 @@ exports.run = async (bot, message, args) => {
 			const randSub = subreddits[Math.random() * subreddits.length | 0];
 			const response = await axios.get('https://meme-api.herokuapp.com/gimme/' + randSub);
 			const { postlink, title, subreddit, url, nsfw, spoiler } = response.data;
-			bot.sendFileFromUrl(message.from, `${url}`, 'meme.jpg', `${title}`);
+			const ext = url.split('.').reverse()[0];
+			console.log(ext);
+			if (ext === 'jpg' || ext === 'png'){
+				bot.sendFileFromUrl(message.from, `${url}`, 'meme.jpg', `${title}`);
+			} else bot.sendFileFromUrl(message.from, `${url}`, 'meme.mp4', `${title}`);
 		} else if(args.length >= 2){
 					args.shift();
 					const texto = args.join(" ");

@@ -47,17 +47,8 @@ exports.run = async (bot, message, args) => {
 												});
 							writer.on('finish', function(err){
 									let fileName = dest+'inputvideo.'+extensao;
-									if(ext === 'gif' || ext === 'mp4'){
-										exec(`gify ${fileName} ./media/output.gif --fps=10 --scale=320:320 --time 10`, function (error, stdout, stderr) {
-													const gif =  fs.readFileSync('./media/output.gif', { encoding: "base64" });
-													bot.sendImageAsSticker(message.from, `data:image/gif;base64,${gif.toString('base64')}`)
-																.catch((err) => {
-																		console.log(err);
-																		bot.reply(message.from,'Error. Could not convert. Duration too long.',message.id);
-																	});
-																});
-									} else if(ext === 'webm'){
-											exec(`ffmpeg -c:v libvpx -t 10 -i ${fileName} -s:v 320:320 -filter:v fps=fps=10 -s:v 320:320 ./media/output.webp -y`, function (error, stdout, stderr) {
+									exec(`ffmpeg -t 10 -i ${fileName} -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=10 , pad=512:512:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse" ./media/output.webp -y`, function (error, stdout, stderr) {
+													if(error) console.log(error);
 													const aux = fs.readFileSync('./media/output.webp', { encoding: "base64" });
 													bot.sendRawWebpAsSticker(message.from, `data:image/webp;base64,${aux.toString('base64')}`)
 																.catch((err) => {
@@ -65,7 +56,8 @@ exports.run = async (bot, message, args) => {
 																			bot.reply(message.from,'Error. Could not convert. Duration too long.',message.id);
 																		});
 												});
-											}
+											
+										
 							});
 						} else {
 							bot.reply(message.from, '[❗] The link you submitted is invalid!', message.id);
