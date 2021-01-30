@@ -28,8 +28,8 @@ exports.run = async (bot, message, args) => {
 };
 
 exports.help = {
-    name: "Fourchan",
+    name: "4chan Thread",
     description: "Download media from a 4chan thread",
-    usage: "fourchan <url>",
+    usage: "4chanthread <url>",
     cooldown: 5
 };

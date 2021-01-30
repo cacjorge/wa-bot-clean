@@ -12,7 +12,7 @@ exports.run = async (bot, message, args) => {
 	if (args.length === 4) {
 		let filename = '';
 		const url = args[1];
-		if (url.match(isYtLink)) {
+		if (isYtLink(url)) {
 			youtubedl.getInfo(url, async function(err, info) {
 				if (err) return bot.reply(message.from,'Não foi possível cortar esse vídeo',message.id);
 				//console.log(info.url);
