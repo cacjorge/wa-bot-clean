@@ -49,7 +49,7 @@ const start = async (bot = new Client()) => {
 		
 		if (!isGroupMsg && commands.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(prefix+command), 'from', color(pushname));
         if (isGroupMsg && commands.startsWith(prefix)) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32mEXEC\x1b[1;37m]', time, color(prefix+command), 'from', color(pushname), 'in', color(formattedTitle));
-	
+		
 		
 		 
         if (availableCommands.has(command)){
@@ -57,10 +57,22 @@ const start = async (bot = new Client()) => {
 		}  
     });
 	
+	
+	bot.onAddedToGroup(((chat) => {
+            let totalMem = chat.groupMetadata.participants.length
+            if (totalMem < 50) { 
+            	client.sendText(chat.id, `O número de membros é apenas ${totalMem}, se você quiser convidar o bot, o número mínimo de membros é 50`).then(() => client.leaveGroup(chat.id)).then(() => client.deleteChat(chat.id))
+            } else {
+                client.sendText(chat.groupMetadata.id, `Olá membros do grupo * ${chat.contact.name} * obrigado por convidar este bot, para ver o menu envie *#help *`);
+            }
+        }));
+	
+	
 	bot.onIncomingCall(( async (call) => {
             await bot.sendText(call.peerJid, 'Não consigo receber chamadas. Seu número será bloqueado se continuar!')
             .then(() => bot.contactBlock(call.peerJid))
         }));
+		
 	// watch for new commands
 	watcher.on('create', function(file, stats) {
 		  availableCommands.add(file.slice(11).replace(".js", ""))
