@@ -35,15 +35,15 @@ const start = async (bot = new Client()) => {
         const commands = caption ? caption : body;
 		if (!commands.startsWith(prefix)) return;
 		
-		console.log("COMMANDS: "+commands);
+		//console.log("COMMANDS: "+commands);
 		const command = commands.slice(prefix.length).split(' ')[0] || '';
-		console.log("COMMAND: "+command);
+		//console.log("COMMAND: "+command);
 		
 		let args = '';
 		if(!message.isMedia) args = message.body.slice(prefix.length).trim().split(/ +/g);
 			else args = commands.slice(prefix.length).trim().split(/ +/g);
 			
-		console.log("ARGS: "+args);
+		//console.log("ARGS: "+args);
 		
 		const time = moment(t * 1000).format('DD/MM HH:mm:ss');
 		

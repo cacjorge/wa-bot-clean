@@ -12,7 +12,18 @@ exports.run = async (bot, message, args) => {
 		try{
 			const mediaData = await decryptMedia(message, uaOverride)
 			bot.reply(message.from, '[Wait] In Progress ⏳ Please Wait a Moment', message.id);
-			await bot.sendMp4AsSticker(message.from, mediaData, {fps: 10, startTime: `00:00:00.0`, endTime : `00:00:10.0`,loop: 0})
+			let fileName = `./media/aswu.${message.mimetype.split('/')[1]}`;
+			await fs.writeFileSync(fileName, mediaData);
+			await exec(`ffmpeg -t 10 -i ${fileName} -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=10 , pad=512:512:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse" ./media/output.webp -y`, function (error, stdout, stderr) {
+													if(error) console.log(error);
+													const aux = fs.readFileSync('./media/output.webp', { encoding: "base64" });
+													bot.sendRawWebpAsSticker(message.from, `data:image/webp;base64,${aux.toString('base64')}`)
+																.catch((err) => {
+																			console.log(err);
+																			bot.reply(message.from,'Error. Could not convert. Duration too long.',message.id);
+																		});
+												});
+			//await bot.sendMp4AsSticker(message.from, mediaData, {fps: 10, startTime: `00:00:00.0`, endTime : `00:00:10.0`,loop: 0})
 		}catch(e){
 			console.log(e);
 			bot.reply(message.from, 'Media size is too big! Please reduce the duration of the video.',message.id);
@@ -21,7 +32,18 @@ exports.run = async (bot, message, args) => {
 				try{
 					const mediaData = await decryptMedia(message.quotedMsg, uaOverride)
 					bot.reply(message.from, '[Wait] In Progress ⏳ Please Wait a Moment', message.id);
-					await bot.sendMp4AsSticker(message.from, mediaData, {fps: 10, startTime: `00:00:00.0`, endTime : `00:00:10.0`,loop: 0});
+					let fileName = `./media/aswu.${message.quotedMsg.mimetype.split('/')[1]}`;
+					await fs.writeFileSync(fileName, mediaData);
+					await exec(`ffmpeg -t 10 -i ${fileName} -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=10 , pad=512:512:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse" ./media/output.webp -y`, function (error, stdout, stderr) {
+													if(error) console.log(error);
+													const aux = fs.readFileSync('./media/output.webp', { encoding: "base64" });
+													bot.sendRawWebpAsSticker(message.from, `data:image/webp;base64,${aux.toString('base64')}`)
+																.catch((err) => {
+																			console.log(err);
+																			bot.reply(message.from,'Error. Could not convert. Duration too long.',message.id);
+																		});
+												});
+					//await bot.sendMp4AsSticker(message.from, mediaData, {fps: 10, startTime: `00:00:00.0`, endTime : `00:00:10.0`,loop: 0});
 				}catch(e){
 					bot.reply(message.from, 'Media size is too big! please reduce the duration of the video.',message.id);
 				}
