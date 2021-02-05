@@ -33,7 +33,7 @@ exports.run = async (bot, message, args) => {
 			console.log(err);
 		}
 	} else {
-			bot.reply(message.from, '[❗] Send the image with the caption */stickernobg* or the image tag that has been sent or url', message.id);
+			bot.reply(message.from, '[❗] Send the image with the caption *#stickernobg* or the image tag that has been sent or url', message.id);
 		}
 };
 

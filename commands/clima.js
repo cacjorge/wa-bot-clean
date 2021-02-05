@@ -36,7 +36,7 @@ exports.run = async (bot, message, args) => {
 			})();
 			
 		} else bot.sendText(message.from,'Formato de pesquisa inválido! Formato deve ser \'Cidade,Estado/Provincia(sigla)(se existir),Pais(sigla)\'');
-	} else bot.sendText(message.from,'Comando inválido! Comando deve ser /clima \'Cidade,Estado/Provincia(sigla)(se existir),Pais(sigla)\'');
+	} else bot.sendText(message.from,'Comando inválido! Comando deve ser #clima \'Cidade,Estado/Provincia(sigla)(se existir),Pais(sigla)\'');
 };
 
 exports.help = {

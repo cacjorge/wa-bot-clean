@@ -1,7 +1,7 @@
 const rpgDiceRoller = require('rpg-dice-roller');
 
 exports.run = async (bot, message, args) => {
-	if (args.length === 1) return bot.reply(message.from, 'Send command *roll [dice] *, example *roll 1d20 *', message.id)
+	if (args.length === 1) return bot.reply(message.from, 'Send command *#roll [dice] *, example *roll 1d20 *', message.id)
 	else if (args.length === 2) {
 		const dice = message.body.split(' ')[1]
 		const roller = new rpgDiceRoller.DiceRoller();

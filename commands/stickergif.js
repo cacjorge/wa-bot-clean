@@ -89,7 +89,7 @@ exports.run = async (bot, message, args) => {
 						bot.reply(message.from,'Error. Could not convert.',message.id);
 					}
 				}else {
-					bot.reply(message.from, '[❗] Send a video with the caption */stickergif* or tag the video sent or url. Max 10 sec#', message.id)
+					bot.reply(message.from, '[❗] Send a video with the caption *#stickergif* or tag the video sent or url. Max 10 sec#', message.id)
 				}
 };
 

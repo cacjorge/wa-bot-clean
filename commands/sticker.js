@@ -21,7 +21,7 @@ exports.run = async (bot, message, args) => {
 					bot.reply(message.from, '[❗] The link you submitted is invalid!', message.id);
 				}
 			} else {
-					bot.reply(message.from, '[❗] Send the image with the caption */sticker* or the image tag that has been sent or url', message.id);
+					bot.reply(message.from, '[❗] Send the image with the caption *#sticker* or the image tag that has been sent or url', message.id);
 			}
 };
 

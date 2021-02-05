@@ -2,7 +2,7 @@ const { lirics } = require('../lib/functions');
 
 exports.run = async (bot, message, args) => {
 	args.shift();
-	if (args.length == 1) return bot.reply(message.from, 'Send command */letra [optional] *, example */letra Evidencias*', message.id);
+	if (args.length == 1) return bot.reply(message.from, 'Send command *#lirics [title] *, example *#lirics Evidencias*', message.id);
 	else {
 		const string = args.join(" ");
 		console.log(string);
