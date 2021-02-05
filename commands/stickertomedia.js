@@ -4,8 +4,9 @@ const { isUrl } = require('../lib/functions');
 
 
 exports.run = async (bot, message, args) => {
+		//console.log(message);
 		if (message.quotedMsg && message.quotedMsg.type === 'sticker') {
-			await bot.reply(message.from, ind.wait(), id)
+			await bot.reply(message.from, '[Wait] In Progress ⏳ Please Wait a Moment', message.id);
 			try {
 				const mediaData = await decryptMedia(message.quotedMsg, uaOverride)
 				const imageBase64 = `data:${message.quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
