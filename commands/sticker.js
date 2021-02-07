@@ -15,7 +15,8 @@ exports.run = async (bot, message, args) => {
 		}else if (args.length === 2) {
 				const url = args[1];
 				if (isUrl(url)) {
-					await bot.sendStickerfromUrl(message.from, url, { method: 'get' })
+					
+					await bot.sendStickerfromUrl(message.from, url, { method: 'get', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36'})
 						.catch(err => console.log('Caught exception: ', err))
 				} else {
 					bot.reply(message.from, '[❗] The link you submitted is invalid!', message.id);
