@@ -14,7 +14,7 @@ exports.run = async (bot, message, args) => {
 			await bot.sendImageAsSticker(message.from, imageBase64)
 		}else if (args.length === 2) {
 				const url = args[1];
-				if (url.match(isUrl)) {
+				if (isUrl(url)) {
 					await bot.sendStickerfromUrl(message.from, url, { method: 'get' })
 						.catch(err => console.log('Caught exception: ', err))
 				} else {
