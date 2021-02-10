@@ -59,11 +59,13 @@ const start = async (bot = new Client()) => {
 	
 	
 	bot.onAddedToGroup(((chat) => {
-            let totalMem = chat.groupMetadata.participants.length
-            if (totalMem < 50) { 
-            	client.sendText(chat.id, `O número de membros é apenas ${totalMem}, se você quiser convidar o bot, o número mínimo de membros é 50`).then(() => client.leaveGroup(chat.id)).then(() => client.deleteChat(chat.id))
+            let totalMem = chat.groupMetadata.participants.length;
+            if (totalMem < 100) { 
+            	client.sendText(chat.id, `O número de membros é apenas ${totalMem}, se você quiser convidar o bot, o número mínimo de membros é 200`)
+					.then(() => client.leaveGroup(chat.id))
+						.then(() => client.deleteChat(chat.id))
             } else {
-                client.sendText(chat.groupMetadata.id, `Olá membros do grupo * ${chat.contact.name} * obrigado por convidar este bot, para ver o menu envie *#help *`);
+                client.sendText(chat.groupMetadata.id, `Olá membros do grupo * ${chat.contact.name} * obrigado por convidar este bot, para ver o menu envie *${prefix}help *`);
             }
         }));
 	
