@@ -4,9 +4,9 @@ const { create, Client } = require('@open-wa/wa-automate')
 const fs = require("fs");
 const color = require('./lib/color');
 const moment = require('moment-timezone');
-hound = require('hound');
+/* hound = require('hound');
 
-watcher = hound.watch('./commands');
+watcher = hound.watch('./commands'); */
 
 const availableCommands = new Set();	
 
@@ -58,17 +58,13 @@ const start = async (bot = new Client()) => {
     });
 	
 	
-	bot.onAddedToGroup(((chat) => {
-            let totalMem = chat.groupMetadata.participants.length;
-            if (totalMem < 100) { 
-            	client.sendText(chat.id, `O número de membros é apenas ${totalMem}, se você quiser convidar o bot, o número mínimo de membros é 200`)
-					.then(() => client.leaveGroup(chat.id))
-						.then(() => client.deleteChat(chat.id))
-            } else {
-                client.sendText(chat.groupMetadata.id, `Olá membros do grupo * ${chat.contact.name} * obrigado por convidar este bot, para ver o menu envie *${prefix}help *`);
-            }
-        }));
-	
+	bot.onAddedToGroup((chat) => {
+			console.log(chat);
+			console.log(chat.groupMetadata.participants.length);
+			bot.sendText(chat.id, `Bot desativado.`)
+					.then(() => bot.leaveGroup(chat.id))
+						.then(() => bot.deleteChat(chat.id))
+        });
 	
 	bot.onIncomingCall(( async (call) => {
             await bot.sendText(call.peerJid, 'Não consigo receber chamadas. Seu número será bloqueado se continuar!')
@@ -76,12 +72,11 @@ const start = async (bot = new Client()) => {
         }));
 		
 	// watch for new commands
-	watcher.on('create', function(file, stats) {
+/* 	watcher.on('create', function(file, stats) {
 		  availableCommands.add(file.slice(11).replace(".js", ""))
 		  console.log(file.slice(11).replace(".js", "") + ' was created')
-		})
+		}) */
 };
-
 
 create(options(true, start))
     .then(client => start(client))
