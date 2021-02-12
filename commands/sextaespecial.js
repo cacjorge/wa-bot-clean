@@ -10,8 +10,8 @@ exports.run = async (bot, message, args) => {
 	}else {
 		bot.sendFile(message.from, './media/videos/sextaespecial.mp4', message.id);
 		const amaroneto = await fs.readFileSync('./media/videos/amaroneto.gif', { encoding: "base64" });
-		await client.sendImageAsSticker(from, `data:image/gif;base64,${amaroneto.toString('base64')}`);
-		const groupMek = await bot.getGroupMembers(message.groupId);
+		await bot.sendImageAsSticker(message.from, `data:image/gif;base64,${amaroneto.toString('base64')}`);
+		/* const groupMek = await bot.getGroupMembers(message.groupId);
 		let heho = '╔═✪〘 *HOJE É SEXTA FEIRA* 〙\n'
 		for (let i = 0; i < groupMek.length; i++) {
 			heho += '╠➥'
@@ -19,7 +19,7 @@ exports.run = async (bot, message, args) => {
 		}
 		heho += '╚═〘 *E SEGUNDA É FERIADO##* 〙';
 		await sleep(500);
-		await bot.sendTextWithMentions(message.from, heho);
+		await bot.sendTextWithMentions(message.from, heho); */
 	}
 };
 
