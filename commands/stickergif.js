@@ -15,14 +15,14 @@ exports.run = async (bot, message, args) => {
 			let fileName = `./media/aswu.${message.mimetype.split('/')[1]}`;
 			await fs.writeFileSync(fileName, mediaData);
 			await exec(`ffmpeg -t 10 -i ${fileName} -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=10 , pad=512:512:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse" ./media/output.webp -y`, function (error, stdout, stderr) {
-													if(error) console.log(error);
-													const aux = fs.readFileSync('./media/output.webp', { encoding: "base64" });
-													bot.sendRawWebpAsSticker(message.from, `data:image/webp;base64,${aux.toString('base64')}`)
-																.catch((err) => {
-																			console.log(err);
-																			bot.reply(message.from,'Error. Could not convert. Duration too long.',message.id);
-																		});
-												});
+					if(error) console.log(error);
+					const aux = fs.readFileSync('./media/output.webp', { encoding: "base64" });
+					bot.sendRawWebpAsSticker(message.from, `data:image/webp;base64,${aux.toString('base64')}`, true)
+						.catch((err) => {
+									console.log(err);
+									bot.reply(message.from,'Error. Could not convert. Duration too long.',message.id);
+								});
+				});
 			//await bot.sendMp4AsSticker(message.from, mediaData, {fps: 10, startTime: `00:00:00.0`, endTime : `00:00:10.0`,loop: 0})
 		}catch(e){
 			console.log(e);
@@ -35,20 +35,21 @@ exports.run = async (bot, message, args) => {
 					let fileName = `./media/aswu.${message.quotedMsg.mimetype.split('/')[1]}`;
 					await fs.writeFileSync(fileName, mediaData);
 					await exec(`ffmpeg -t 10 -i ${fileName} -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=10 , pad=512:512:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse" ./media/output.webp -y`, function (error, stdout, stderr) {
-													if(error) console.log(error);
-													const aux = fs.readFileSync('./media/output.webp', { encoding: "base64" });
-													bot.sendRawWebpAsSticker(message.from, `data:image/webp;base64,${aux.toString('base64')}`)
-																.catch((err) => {
-																			console.log(err);
-																			bot.reply(message.from,'Error. Could not convert. Duration too long.',message.id);
-																		});
-												});
+							if(error) console.log(error);
+							const aux = fs.readFileSync('./media/output.webp', { encoding: "base64" });
+							bot.sendRawWebpAsSticker(message.from, `data:image/webp;base64,${aux.toString('base64')}`,true)
+								.catch((err) => {
+											console.log(err);
+											bot.reply(message.from,'Error. Could not convert. Duration too long.',message.id);
+										});
+						});
 					//await bot.sendMp4AsSticker(message.from, mediaData, {fps: 10, startTime: `00:00:00.0`, endTime : `00:00:10.0`,loop: 0});
 				}catch(e){
 					bot.reply(message.from, 'Media size is too big! please reduce the duration of the video.',message.id);
 				}
 				
 			} else if (args.length === 2) {
+				console.log(args);
 					try{
 						const url = args[1];
 						if (isUrl(url)) {
@@ -57,29 +58,30 @@ exports.run = async (bot, message, args) => {
 							const dest = './media/';
 							let extensao = url.split('.').reverse()[0];
 							const writer = fs.createWriteStream(dest+'inputvideo.'+extensao);
-							axios.get(url, {responseType: "stream"})
-											.then(response => {
-													const fileType = response.headers['content-type'];
-													ext = fileType ? fileType.split('/').pop() : undefined;
-													
-													if(ext === 'webm' || ext === 'gif' || ext === 'mp4'){
-														response.data.pipe(writer);
-													} else return bot.reply(message.from,'Wrong Video Format. Only GIF, MP4 or WEBM',message.id);
-													
-												});
-							writer.on('finish', function(err){
-									let fileName = dest+'inputvideo.'+extensao;
-									exec(`ffmpeg -t 10 -i ${fileName} -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=10 , pad=512:512:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse" ./media/output.webp -y`, function (error, stdout, stderr) {
-													if(error) console.log(error);
-													const aux = fs.readFileSync('./media/output.webp', { encoding: "base64" });
-													bot.sendRawWebpAsSticker(message.from, `data:image/webp;base64,${aux.toString('base64')}`)
-																.catch((err) => {
-																			console.log(err);
-																			bot.reply(message.from,'Error. Could not convert. Duration too long.',message.id);
-																		});
-												});
-											
+							axios.get(url, {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'responseType': 'stream'})
+								.then(response => {
+										const fileType = response.headers['content-type'];
+										ext = fileType ? fileType.split('/').pop() : undefined;
 										
+										if(ext === 'webm' || ext === 'gif' || ext === 'mp4'){
+											response.data.pipe(writer);
+										} else return bot.reply(message.from, 'Wrong Video Format. Only GIF, MP4 or WEBM', message.id);
+									})
+								.catch((error) => {
+									bot.reply(message.from, "ERROR. 404 Not Found",message.id);
+								});
+
+							writer.on('finish', function(err){
+								let fileName = dest+'inputvideo.'+extensao;
+								exec(`ffmpeg -t 10 -i ${fileName} -vf "scale=512:512:force_original_aspect_ratio=decrease,fps=10 , pad=512:512:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse" ./media/output.webp -y`, function (error, stdout, stderr) {
+												if(error) console.log(error);
+												const aux = fs.readFileSync('./media/output.webp', { encoding: "base64" });
+												bot.sendRawWebpAsSticker(message.from, `data:image/webp;base64,${aux.toString('base64')}`, true)
+															.catch((err) => {
+																		console.log(err);
+																		bot.reply(message.from,'Error. Could not convert. Duration too long.',message.id);
+																	});
+											});
 							});
 						} else {
 							bot.reply(message.from, '[❗] The link you submitted is invalid!', message.id);
