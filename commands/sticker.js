@@ -8,10 +8,10 @@ exports.run = async (bot, message, args) => {
 		const mediaData = await decryptMedia(message, uaOverride)
 		const imageBase64 = `data:${message.mimetype};base64,${mediaData.toString('base64')}`
 		await bot.sendImageAsSticker(message.from, imageBase64)
-		} else if (message.quotedMsg && message.quotedMsg.type == 'image') {
-			const mediaData = await decryptMedia(message.quotedMsg, uaOverride)
-			const imageBase64 = `data:${message.quotedMsg.mimetype};base64,${mediaData.toString('base64')}`
-			await bot.sendImageAsSticker(message.from, imageBase64)
+		} else if (message.quotedMsg && message.quotedMsg.type === 'image') {
+			const mediaData = await decryptMedia(message.quotedMsg, uaOverride);
+			const imageBase64 = `data:${message.quotedMsg.mimetype};base64,${mediaData.toString('base64')}`;
+			await bot.sendImageAsSticker(message.from, imageBase64).catch(err => console.log('Caught exception: ', err));
 		}else if (args.length === 2) {
 				const url = args[1];
 				if (isUrl(url)) {
