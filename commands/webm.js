@@ -4,7 +4,7 @@ const { spawn, exec } = require('child_process');
 
 exports.run = async (bot, message, args) => {
 	console.log(args);
-	if (args.length === 1) return bot.reply(message.from, '*4chan [link to image/webm] *', message.id)
+	if (args.length === 1) return bot.reply(message.from, '*webm [link to image/webm] *', message.id)
 	if (args.length === 2) {
 		const url = args[1];
 		let extensao = url.split('.').reverse()[0];

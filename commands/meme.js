@@ -20,8 +20,8 @@ exports.run = async (bot, message, args) => {
 		} else if(args.length >= 2){
 					args.shift();
 					const texto = args.join(" ");
-					const topText = texto.trim().split('|')[0].replace(/ /g,"_");;
-					const bottomText = texto.trim().split('|')[1].replace(/ /g,"_");
+					const topText = texto.trim().split('|')[0];//.replace(/ /g,"_");;
+					const bottomText = texto.trim().split('|')[1];//.replace(/ /g,"_");
 					/* console.log(topText);
 					console.log("#######");
 					console.log(bottomText); */

@@ -20,12 +20,14 @@ exports.run = async (bot, message, args) => {
 							bot.reply(message.from,'Não foi possível converter esse vídeo',message.id);
 							throw err;
 						}
+						console.log(output);
 						sleep(200);
-						filename = output[3].split(': ')[1];
-						bot.sendFile(message.from, `./${filename}`,`./${filename}`,`./${filename}`, message.id)
+						let filename2 = filename.split('.')[0];
+						console.log(filename2);
+						bot.sendFile(message.from, `./${filename2}.mp3`,`./${filename2}.mp3`,`./${filename2}.mp3`, message.id)
 						sleep(200);
 						
-						const pathToFile = `./${filename}`;
+						const pathToFile = `./${filename2}.mp3`;
 						fs.unlink(pathToFile, function(err) {
 												if (err) {
 														console.log( err );

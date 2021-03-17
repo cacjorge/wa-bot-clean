@@ -16,7 +16,7 @@ exports.run = async (bot, message, args) => {
 			// for the api key you can get it on the website remove.bg
 			var result = await removeBackgroundFromImageBase64({ base64img, apiKey: 'jStop5xAeABgDDC5Lx6Nv9EZ', size: 'auto', type: 'auto', outFile });
 			//await fs.writeFile(outFile, result.base64img)
-			await bot.sendImageAsSticker(message.from, `data:${message.mimetype};base64,${result.base64img}`);
+			await bot.sendImageAsSticker(message.from, `data:${message.mimetype};base64,${result.base64img}`,{ keepScale: true });
 		} catch(err) {
 			console.log(err);
 		}
@@ -28,7 +28,7 @@ exports.run = async (bot, message, args) => {
 			var outFile = './media/img/noBg.png';
 			var result = await removeBackgroundFromImageBase64({ base64img, apiKey: 'jStop5xAeABgDDC5Lx6Nv9EZ', size: 'auto', type: 'auto', outFile });
 			//await fs.writeFile(outFile, result.base64img);
-			await bot.sendImageAsSticker(message.from, `data:${message.quotedMsg.mimetype};base64,${result.base64img}`);
+			await bot.sendImageAsSticker(message.from, `data:${message.quotedMsg.mimetype};base64,${result.base64img}`,{ keepScale: true });
 		} catch(err) {
 			console.log(err);
 		}

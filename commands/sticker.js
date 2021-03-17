@@ -7,16 +7,16 @@ exports.run = async (bot, message, args) => {
     if (message.isMedia && message.type === 'image' ) {
 		const mediaData = await decryptMedia(message, uaOverride)
 		const imageBase64 = `data:${message.mimetype};base64,${mediaData.toString('base64')}`
-		await bot.sendImageAsSticker(message.from, imageBase64)
+		await bot.sendImageAsSticker(message.from, imageBase64,{ keepScale: true })
 		} else if (message.quotedMsg && message.quotedMsg.type === 'image') {
 			const mediaData = await decryptMedia(message.quotedMsg, uaOverride);
 			const imageBase64 = `data:${message.quotedMsg.mimetype};base64,${mediaData.toString('base64')}`;
-			await bot.sendImageAsSticker(message.from, imageBase64).catch(err => console.log('Caught exception: ', err));
+			await bot.sendImageAsSticker(message.from, imageBase64,{ keepScale: true }).catch(err => console.log('Caught exception: ', err));
 		}else if (args.length === 2) {
 				const url = args[1];
 				if (isUrl(url)) {
 					
-					await bot.sendStickerfromUrl(message.from, url, { method: 'get', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36'})
+					await bot.sendStickerfromUrl(message.from, url, { method: 'get', 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36'},{ keepScale: true })
 						.catch(err => console.log('Caught exception: ', err))
 				} else {
 					bot.reply(message.from, '[❗] The link you submitted is invalid!', message.id);
