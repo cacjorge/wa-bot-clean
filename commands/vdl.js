@@ -10,7 +10,10 @@ exports.run = async (bot, message, args) => {
 			//let filepath = 'temp.mp4';
 			
 			youtubedl.getInfo(url, async function(err, info) {
-				  if (err) throw err
+				  if (err) {
+					bot.reply(message.from, '[❗] The link you submitted is invalid or is a private video!', message.id);
+					return;
+				  }
 				  await bot.sendFileFromUrl(message.from,info.url,info._filename,info.title,message.id).catch(() => bot.reply(message.from, '[❗] An error occurred, maybe the error is caused by the system.', message.id));
 				});
 		} else {

@@ -27,14 +27,14 @@ exports.run = async (bot, message, args) => {
 						bot.sendFile(message.from, `./${filename2}.mp3`,`./${filename2}.mp3`,`./${filename2}.mp3`, message.id)
 						sleep(200);
 						
-						const pathToFile = `./${filename2}.mp3`;
+						/* const pathToFile = `./${filename2}.mp3`;
 						fs.unlink(pathToFile, function(err) {
 												if (err) {
 														console.log( err );
 													} else {
 														console.log("Successfully deleted the file.")
 													}
-								});
+								}); */
 						}); 
 		   }catch{
 					bot.reply(from,'Desculpe, não foi possível enviar. Falha Catastrófica.',id);
